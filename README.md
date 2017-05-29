@@ -5,6 +5,7 @@ Plan
 - [Étape 1](#étape-1)
 - [Étape 2](#étape-2)
 - [Étape 3](#étape-3)
+- [Étape 4](#étape-4)
 
 ## Étape 1
 
@@ -204,3 +205,47 @@ constructor(private api: WeatherApiService) {
   this.weather = api.getWeather()
 }
 ```
+
+## Étape 4
+
+Intégration des données d'un web service
+
+Appel à l'API OpenWeatherMap depuis le service WeatherApiService
+
+```ts
+  async getWeather() {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=Rennes,fr&appid=e7a7e42f9288170a490c5fca2d91f5df`;
+    return fetch(url).then((response) => response.json())
+  }
+```
+
+Mise à jour du template du composant WeatherComponent
+
+```html
+<pre>{{weather|json}}</pre>
+<!--
+<h3>Ville: {{weather.city}}</h3>
+<h4>Pays: {{weather.country}}</h4>
+<p>
+  Latitude: <i>{{weather.lat}}</i>
+  Longitude: <i>{{weather.lon}}</i>
+</p>
+<p>
+  Condition météo: {{weather.description}}
+</p>
+-->
+```
+
+Mise à jour du composant WeatherComponent
+
+```ts
+export class WeatherComponent implements OnInit {
+  weather;
+  constructor(private api: WeatherApiService) {}
+  async ngOnInit() {
+    this.weather = await this.api.getWeather()
+  }
+}
+```
+
+Mettre à jour le template avec les données récupéré via le web service
