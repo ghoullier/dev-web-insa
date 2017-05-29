@@ -10,9 +10,8 @@ import { WeatherApiService } from './../weather-api.service';
 })
 export class WeatherComponent implements OnInit {
   weather;
-  constructor(private api: WeatherApiService) {
-    this.weather = api.getWeather()
+  constructor(private api: WeatherApiService) {}
+  async ngOnInit() {
+    this.weather = await this.api.getWeather()
   }
-  ngOnInit() {}
-
 }

@@ -5,14 +5,9 @@ export class WeatherApiService {
 
   constructor() { }
 
-  getWeather() {
-    return {
-      city: 'Rennes',
-      country: 'France',
-      lat: 48.11,
-      lon: -1.67,
-      description: 'Nuageux'
-    };
+  async getWeather() {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=Rennes,fr&appid=e7a7e42f9288170a490c5fca2d91f5df`;
+    return fetch(url).then((response) => response.json())
   }
 
 }
