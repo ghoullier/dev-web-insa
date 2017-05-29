@@ -11,6 +11,11 @@ const routes: Routes = [
     children: []
   },
   {
+    path: 'weather/:city',
+    component: HomeComponent,
+    children: []
+  },
+  {
     path: 'about',
     component: AboutComponent,
     children: []

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,11 @@ export class HomeComponent implements OnInit {
 
   city = 'Rennes,fr'
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    route.params.subscribe((params) => {
+      this.city = params.city;
+    });
+  }
 
   ngOnInit() {
   }
