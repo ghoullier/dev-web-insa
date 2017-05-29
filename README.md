@@ -319,3 +319,44 @@ Implémenter l'interface OnChanges dans le componsant WeatherComponent
 ```
 
 Vérifier que les données sont bien relative à la nouvelle ville saisie dans le champs texte.
+
+## Étape 6
+
+Ajout d'une nouvelle route pour passer la ville en paramètre
+
+/src/app/app-routing.module.ts
+```ts
+  {
+    path: 'weather/:city',
+    component: HomeComponent,
+    children: []
+  },
+```
+
+Gestion des paramètres dans le composant HomeComponent
+Injection du service ActivatedRoute 
+
+/src/app/home/home.component.ts
+```ts
+import { ActivatedRoute } from '@angular/router';
+```
+
+```ts
+constructor(private route: ActivatedRoute) {
+  route.params.subscribe((params) => {
+    // Gestion des paramètres de l'url
+  });
+}
+```
+
+Ajout de liens de navigation raccourcis
+
+```html
+<h1>{{title}}</h1>
+<nav>
+  <a routerLink="/about">About</a>
+  <a routerLink="/???">Météo à Rennes</a>
+  <a routerLink="/???">Météo à Paris</a>
+</nav>
+<router-outlet></router-outlet>
+```
