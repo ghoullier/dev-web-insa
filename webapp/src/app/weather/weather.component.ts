@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
+import { WeatherApiService } from './../weather-api.service';
+
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.css']
+  styleUrls: ['./weather.component.css'],
+  providers: [WeatherApiService]
 })
 export class WeatherComponent implements OnInit {
-  weather = {
-    city: 'Rennes',
-    country: 'France',
-    lat: 48.11,
-    lon: -1.67,
-    description: 'Nuageux'
-
-  };
-  constructor() { }
+  weather;
+  constructor(private api: WeatherApiService) {
+    this.weather = api.getWeather()
+  }
   ngOnInit() {}
 
 }
