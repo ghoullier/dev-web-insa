@@ -4,6 +4,7 @@ Plan
 
 - [Étape 1](#étape-1)
 - [Étape 2](#étape-2)
+- [Étape 3](#étape-3)
 
 ## Étape 1
 
@@ -140,5 +141,66 @@ export class WeatherComponent implements OnInit {
   }
   construtor() { }
   ngOnInit() { }
+}
+```
+
+## Étape 3
+
+Séparation des données dans un service
+
+```console
+ng generate service weather-api
+```
+
+La classe suivante est générée
+
+```ts
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class WeatherApiService {
+
+  constructor() { }
+
+}
+```
+
+Ajouter une méthode getWeather qui retourne l'objet précédement créé dans le composant WeatherComponent
+
+Mettre en place les test unitaires pour valider l'objet retourné par la méthode
+
+```ts
+  it('should return valid city', inject([WeatherApiService], (service: WeatherApiService) => {
+    
+  }));
+
+  it('should return valid country', inject([WeatherApiService], (service: WeatherApiService) => {
+    
+  }));
+
+  it('should return valid coord', inject([WeatherApiService], (service: WeatherApiService) => {
+
+  }));
+```
+
+Intégration du service dans le composant WeatherComponent
+
+Le service doit etre injecté au composant. Pour cela il faut le déclarer dans les providers du component
+
+```ts
+
+@Component({
+  selector: 'app-weather',
+  templateUrl: './weather.component.html',
+  styleUrls: ['./weather.component.css'],
+  providers: [ ]
+})
+```
+
+L'injection du service se fait via le constructeur de la class du composant
+
+```ts
+constructor(private api: WeatherApiService) {
+  this.weather = api.getWeather()
 }
 ```
