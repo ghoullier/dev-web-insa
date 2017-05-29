@@ -3,6 +3,7 @@
 Plan
 
 - [Étape 1](#étape-1)
+- [Étape 2](#étape-2)
 
 ## Étape 1
 
@@ -89,3 +90,55 @@ const routes: Routes = [
 ```
 
 Dans le template du composant About ajouter un lien pour naviguer vers la home
+
+## Étape 2
+
+> Gestion d'un widget météo
+
+Création d'un nouveau composant
+
+```console
+ng generate component weather
+```
+
+weather/weather.component.html
+```html
+<h3>Ville: Rennes</h3>
+<h4>Pays: France</h4>
+<p>
+  Latitude: <i>48.11</i>
+  Longitude: <i>-1.67</i>
+</p>
+<p>
+  Condition météo: Pluvieux
+</p>
+```
+
+Intégration du composant weather dans le composant home
+
+home/home.component.html
+```html
+<app-weather></app-weather>
+```
+
+Remplacer les valeurs en dur dans le template par une des valeurs définis dans la classe WeatherComponent
+
+Example
+
+```ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-weather',
+  templateUrl: './weather.component.html',
+  styleUrls: ['./weather.component.css']
+})
+export class WeatherComponent implements OnInit {
+  weather = {
+    city: 'Rennes',
+    ...
+  }
+  construtor() { }
+  ngOnInit() { }
+}
+```
