@@ -6,6 +6,7 @@ Plan
 - [Étape 2](#étape-2)
 - [Étape 3](#étape-3)
 - [Étape 4](#étape-4)
+- [Étape 5](#étape-5)
 
 ## Étape 1
 
@@ -249,3 +250,72 @@ export class WeatherComponent implements OnInit {
 ```
 
 Mettre à jour le template avec les données récupéré via le web service
+
+## Étape 5
+
+Paramétrage de l'appel au web service
+
+/src/app/weather-api.service.ts
+```ts
+async getWeather(city = 'Rennes,fr') {
+  // Mettre à jour l'url d'appel au web service
+}
+```
+
+Modifier le composant WeatherComponent pour qu'il recoive en paramètre une proprité city via un Input
+
+/src/app/weather/weather.component.ts
+```ts
+import { Input } from '@angular/core';
+
+interface WeatherCity {
+  city: string
+}
+```
+
+Implémenter l'interface WeatherCity pour le WeatherComponent
+
+Annoter la propriété city avec l'annotation Input
+
+Modifier le template du composant HomeComponent pour injecter l'input city
+
+/src/app/home/home.component.html
+```html
+<app-weather city="Nantes,fr"></app-weather>
+```
+
+Vérifier que les données sont bien relative à la nouvelle ville.
+
+Modifier le template du composant HomeComponent pour que la valeur de l'input city soit relative à un champ texte
+
+/src/app/home/home.component.html
+```html
+<p>home works!</p>
+<label>Ville <input type="text" name="city" [(ngModel)]="city"></label>
+<app-weather [city]="city"></app-weather>
+```
+
+/src/app/home/home.component.ts
+```ts 
+export class HomeComponent implements OnInit {
+  city = 'Rennes,fr'
+  ...
+} 
+```
+
+Prise en compte des changements coté WeatherComponent
+
+/src/app/weather/weather.component.ts
+```ts
+import { OnChanges, SimpleChanges } from '@angular/core';
+```
+
+Implémenter l'interface OnChanges dans le componsant WeatherComponent
+
+```ts
+  async ngOnChanges(changes: SimpleChanges) {
+    this.weather = await this.api.getWeather(changes.city.currentValue);
+  }
+```
+
+Vérifier que les données sont bien relative à la nouvelle ville saisie dans le champs texte.
